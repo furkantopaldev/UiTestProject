@@ -19,3 +19,7 @@ desktop.ini
 *.log
 .env
 *.local.properties
+
+#gizledigim klasor
+
+detayliPdf/
