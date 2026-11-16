@@ -1,14 +1,21 @@
-﻿.idea/
-.vscode/
-*.iml
+﻿# Maven çıktıları ve raporlar
 target/
-build/
-node_modules/
-venv/
-__pycache__/
-test-output/
 allure-results/
 allure-report/
-playwright-report/
 screenshots/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Loglar ve gizli bilgiler
+*.log
 .env
+*.local.properties
