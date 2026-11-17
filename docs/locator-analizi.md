@@ -37,28 +37,28 @@ Durum	Element	Tur	Locator	Eslesme	Gerekce
 
 Bu bolum DevTools'ta dogrulandikca doldurulacak.
 
-Durum	Element	Tur	Aday locator	Eslesme	Gerekce
-[ ]	Mr. radyo butonu		#id_gender1		
-[ ]	Sifre		[data-qa='password']		
-[ ]	Gun (select)		[data-qa='days']		
-[ ]	Ay (select)		[data-qa='months']		
-[ ]	Yil (select)		[data-qa='years']		
-[ ]	Ad		[data-qa='first_name']		
-[ ]	Soyad		[data-qa='last_name']		
-[ ]	Adres		[data-qa='address']		
-[ ]	Ulke (select)		[data-qa='country']		
-[ ]	Eyalet		[data-qa='state']		
-[ ]	Sehir		[data-qa='city']		
-[ ]	Posta kodu		[data-qa='zipcode']		
-[ ]	Cep telefonu		[data-qa='mobile_number']		
-[ ]	Hesap olustur butonu		[data-qa='create-account']		
+Durum	                                    Element	Tur	Aday locator	                                    Eslesme	Gerekce
+[OK]	Mr. radyo butonu		                #id_gender1		
+[OK]	Sifre		                            [data-qa='password']		
+[OK]	Gun (select)		                    [data-qa='days']		
+[OK]	Ay (select)		                        [data-qa='months']		
+[ok]	Yil (select)		                    [data-qa='years']		
+[OK]	Ad		                                [data-qa='first_name']		
+[OK]	Soyad		                            [data-qa='last_name']		
+[OK]	Adres		                            [data-qa='address']		
+[OK]	Ulke (select)	    	                [data-qa='country']		
+[OK]	Eyalet		                            [data-qa='state']		
+[OK]	Sehir		                            [data-qa='city']		
+[OK]	Posta kodu		                        [data-qa='zipcode']		
+[OK]	Cep telefonu		                    [data-qa='mobile_number']		
+[OK]	Hesap olustur butonu		            [data-qa='create-account']		
 5. Hesap olusturuldu / silindi sayfalari
-Durum	Element	Tur	Aday locator	Eslesme	Gerekce
-[ ]	"ACCOUNT CREATED!" basligi		[data-qa='account-created']		
-[ ]	Continue butonu		[data-qa='continue-button']		
-[ ]	"Logged in as ..." baglantisi				Kullanici adi degisken; sabit kisma gore bulunmali
-[ ]	Delete Account baglantisi		a[href='/delete_account']		
-[ ]	"ACCOUNT DELETED!" basligi		[data-qa='account-deleted']		
+Durum	                                    Element	Tur	Aday locator	                                    Eslesme	Gerekce
+[OK]	"ACCOUNT CREATED!" basligi		        [data-qa='account-created']		
+[OK]	Continue butonu		                    [data-qa='continue-button']		
+[OK]	"Logged in as ..." baglantisi			Kullanici adi degisken; sabit kisma gore bulunmali
+[ok]	Delete Account baglantisi		        a[href='/delete_account']		
+[OK]	"ACCOUNT DELETED!" basligi		        [data-qa='account-deleted']		
 6. Zor durumlar ve cikarimlar
 Durum	Ornek	Cikarim
 Coklu eslesme	input[name='email'] login sayfasinda 2 sonuc verdi	By.name("email") sessizce ilk elementi secerdi; data-qa ile ayristirildi
