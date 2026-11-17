@@ -14,14 +14,17 @@ import java.time.Duration;
 /**
  * Koşula bağlı (dinamik) bekleme yardımcıları.
  * Hiçbir yerde Thread.sleep kullanılmaz; koşul sağlanır sağlanmaz devam edilir,
- * süre dolarsa neyin beklendiğini söyleyen anlaşılır bir hata fırlatılır.
+ * süre dolarsa neyin beklendiğini ve tarayıcının o an nerede olduğunu söyleyen
+ * anlaşılır bir hata fırlatılır.
  */
 public final class WaitHelper {
 
+    private final WebDriver driver;
     private final WebDriverWait wait;
     private final int timeoutSeconds;
 
     public WaitHelper(WebDriver driver) {
+        this.driver = driver;
         this.timeoutSeconds = ConfigReader.getInt("explicit.wait.seconds");
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
     }
@@ -56,7 +59,25 @@ public final class WaitHelper {
         } catch (TimeoutException e) {
             String target = (locator == null) ? "" : " | element: " + locator;
             throw new TimeoutException(
-                    timeoutSeconds + " saniye içinde koşul sağlanmadı: " + reason + target, e);
+                    timeoutSeconds + " saniye içinde koşul sağlanmadı: " + reason + target
+                            + " | URL: " + currentUrl()
+                            + " | Sayfa başlığı: " + currentTitle(), e);
+        }
+    }
+
+    private String currentUrl() {
+        try {
+            return driver.getCurrentUrl();
+        } catch (Exception e) {
+            return "okunamadı";
+        }
+    }
+
+    private String currentTitle() {
+        try {
+            return driver.getTitle();
+        } catch (Exception e) {
+            return "okunamadı";
         }
     }
 }
