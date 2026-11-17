@@ -17,6 +17,7 @@ public class LoginPage extends BasePage {
     private static final By SIGNUP_NAME = By.cssSelector("[data-qa='signup-name']");
     private static final By SIGNUP_EMAIL = By.cssSelector("[data-qa='signup-email']");
     private static final By SIGNUP_BUTTON = By.cssSelector("[data-qa='signup-button']");
+    private static final By SIGNUP_ERROR = By.cssSelector(".signup-form form p");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -34,12 +35,21 @@ public class LoginPage extends BasePage {
 
     /** Sag formu doldurup Signup'a basar ve hesap bilgileri sayfasini dondurur. */
     public SignupPage startSignup(String name, String email) {
-        type(SIGNUP_NAME, name);
-        type(SIGNUP_EMAIL, email);
-        click(SIGNUP_BUTTON);
+        submitSignup(name, email);
         SignupPage signupPage = new SignupPage(driver);
         signupPage.waitUntilLoaded();
         return signupPage;
+    }
+
+    /** Sag formu doldurup Signup'a basar, sonraki sayfayi beklemez (hata senaryolari icin). */
+    public void submitSignup(String name, String email) {
+        type(SIGNUP_NAME, name);
+        type(SIGNUP_EMAIL, email);
+        click(SIGNUP_BUTTON);
+    }
+
+    public String getSignupErrorMessage() {
+        return getText(SIGNUP_ERROR);
     }
 
     public String getErrorMessage() {
