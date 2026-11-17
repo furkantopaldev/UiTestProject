@@ -14,8 +14,8 @@ import java.time.Duration;
 /**
  * Koşula bağlı (dinamik) bekleme yardımcıları.
  * Hiçbir yerde Thread.sleep kullanılmaz; koşul sağlanır sağlanmaz devam edilir,
- * süre dolarsa neyin beklendiğini ve tarayıcının o an nerede olduğunu söyleyen
- * anlaşılır bir hata fırlatılır.
+ * süre dolarsa neyin beklendiğini, tarayıcının o an nerede olduğunu ve
+ * sorunun ortamdan gelip gelmediğini söyleyen anlaşılır bir hata fırlatılır.
  */
 public final class WaitHelper {
 
@@ -61,7 +61,8 @@ public final class WaitHelper {
             throw new TimeoutException(
                     timeoutSeconds + " saniye içinde koşul sağlanmadı: " + reason + target
                             + " | URL: " + currentUrl()
-                            + " | Sayfa başlığı: " + currentTitle(), e);
+                            + " | Sayfa başlığı: " + currentTitle()
+                            + overloadHint(), e);
         }
     }
 
@@ -79,5 +80,18 @@ public final class WaitHelper {
         } catch (Exception e) {
             return "okunamadı";
         }
+    }
+
+    /** Sitenin aşırı yük sayfası gösterip göstermediğine bakar; gösteriyorsa mesaja uyarı ekler. */
+    private String overloadHint() {
+        try {
+            String bodyText = driver.findElement(By.tagName("body")).getText().toLowerCase();
+            if (bodyText.contains("heavy load")) {
+                return " | ORTAM SORUNU: site 'heavy load (queue full)' sayfası döndürüyor, test kodu değil";
+            }
+        } catch (Exception ignored) {
+            // Sayfa okunamıyorsa ek bir uyarı üretmeden devam edilir.
+        }
+        return "";
     }
 }
