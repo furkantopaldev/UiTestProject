@@ -56,7 +56,7 @@ Durum	                                    Element	Tur	Aday locator	             
 Durum	                                    Element	Tur	Aday locator	                                    Eslesme	Gerekce
 [OK]	"ACCOUNT CREATED!" basligi		        [data-qa='account-created']		
 [OK]	Continue butonu		                    [data-qa='continue-button']		
-[OK]	"Logged in as ..." baglantisi			Kullanici adi degisken; sabit kisma gore bulunmali
+[ok]	"Logged in as ..." baglantisi		    //a[contains(., 'Logged in as')]/b
 [ok]	Delete Account baglantisi		        a[href='/delete_account']		
 [OK]	"ACCOUNT DELETED!" basligi		        [data-qa='account-deleted']		
 6. Zor durumlar ve cikarimlar
