@@ -5,4 +5,9 @@
             <class name="com.automationexercise.tests.HomePageTest"/>
         </classes>
     </test>
+    <test name="Login">
+    <classes>
+        <class name="com.automationexercise.tests.LoginTest"/>
+    </classes>
+</test>
 </suite>
