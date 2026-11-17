@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Tüm sayfa nesnelerinin ortak davranışları.
@@ -32,6 +33,10 @@ public abstract class BasePage {
 
     protected String getText(By locator) {
         return waits.visible(locator).getText();
+    }
+
+    protected void selectByText(By locator, String visibleText) {
+        new Select(waits.visible(locator)).selectByVisibleText(visibleText);
     }
 
     /** Element görünürse true; zaman aşımında false döner (hata fırlatmaz). */
