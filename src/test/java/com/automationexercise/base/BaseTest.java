@@ -29,12 +29,22 @@ public abstract class BaseTest {
         driver.get(ConfigReader.get("base.url"));
     }
 
-    @AfterMethod(alwaysRun = true)
+       @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            captureFailureEvidence(result.getName());
+        try {
+            if (result.getStatus() == ITestResult.FAILURE) {
+                captureFailureEvidence(result.getName());
+            }
+            cleanUp();
+        } catch (Exception e) {
+            System.err.println("Temizlik adimi basarisiz: " + e.getMessage());
+        } finally {
+            DriverFactory.quitDriver();
         }
-        DriverFactory.quitDriver();
+    }
+
+    /** Alt siniflar test sonrasi temizlik icin ezebilir (ornegin olusturulan hesabi silme). */
+    protected void cleanUp() {
     }
 
     /** Başarısız testte ekran görüntüsünü ve URL'i kaydeder. Tarayıcı kapanmadan önce çağrılmalı. */
