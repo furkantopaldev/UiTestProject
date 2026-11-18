@@ -1,4 +1,5 @@
 package com.automationexercise.pages;
+import com.automationexercise.utils.NetworkProbe;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +18,9 @@ public class ProductsPage extends BasePage {
 
     private static final By PRODUCT_NAMES = By.cssSelector(".product-image-wrapper .productinfo p");
 
-    // Sepete eklenince acilan "Added!" penceresi (menudeki Cart baglantisiyla karismasin diye kisitli)
+    // Sepete eklenince acilan "Added!" penceresi
+    private static final By ADDED_MODAL_TITLE = By.xpath(
+            "//div[contains(@class,'modal-content')]//h4[normalize-space()='Added!']");
     private static final By ADDED_MODAL_VIEW_CART = By.cssSelector(".modal-content a[href='/view_cart']");
 
     public ProductsPage(WebDriver driver) {
@@ -26,17 +29,22 @@ public class ProductsPage extends BasePage {
 
     public void waitUntilLoaded() {
         waits.visible(SEARCH_INPUT);
+        NetworkProbe.install(driver);
     }
 
     public boolean isAllProductsTitleDisplayed() {
         return isDisplayed(ALL_PRODUCTS_TITLE);
     }
 
-    public boolean isSearchedProductsTitleDisplayed() {
-        return isDisplayed(SEARCHED_PRODUCTS_TITLE);
+    /**
+     * Arama sonuc basliginin gelmesini bekler. Gelmezse zaman asimi hatasi firlatir;
+     * mesajda URL, sayfa basligi ve (varsa) ORTAM SORUNU uyarisi bulunur.
+     */
+    public void waitForSearchedProductsTitle() {
+        waits.visible(SEARCHED_PRODUCTS_TITLE);
     }
 
-    /** Arama yapar. Sonucun geldigini beklemek cagiranin isidir (isSearchedProductsTitleDisplayed). */
+    /** Arama yapar. Sonucun geldigini beklemek cagiranin isidir (waitForSearchedProductsTitle). */
     public void search(String term) {
         type(SEARCH_INPUT, term);
         click(SEARCH_BUTTON);
@@ -54,14 +62,19 @@ public class ProductsPage extends BasePage {
      * sonra katmandaki buton tiklanir.
      */
     public void addToCart(int productId) {
+        NetworkProbe.install(driver);   // tanilama: tiklama ve istek kaydi (davranisi degistirmez)
         By cardButton = By.cssSelector(".productinfo a.add-to-cart[data-product-id='" + productId + "']");
         By overlayButton = By.cssSelector(".product-overlay a.add-to-cart[data-product-id='" + productId + "']");
         hover(cardButton);
         click(overlayButton);
     }
 
-    /** "Added!" penceresindeki View Cart'a tiklar ve sepet sayfasini dondurur. */
+    /**
+     * "Added!" penceresindeki View Cart'a tiklar ve sepet sayfasini dondurur.
+     * Once pencerenin kendisi beklenir: pencere hic acilmadiysa hata bunu soyler.
+     */
     public CartPage viewCartFromModal() {
+        waits.visible(ADDED_MODAL_TITLE);
         click(ADDED_MODAL_VIEW_CART);
         waits.urlContains("/view_cart");
         CartPage cartPage = new CartPage(driver);

@@ -2,6 +2,7 @@ package com.automationexercise.base;
 
 import com.automationexercise.config.ConfigReader;
 import com.automationexercise.driver.DriverFactory;
+import com.automationexercise.utils.NetworkProbe;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -52,7 +53,7 @@ public abstract class BaseTest {
     protected void cleanUp() {
     }
 
-    /** Basarisiz testte ekran goruntusunu, URL'i ve tarayici konsol hatalarini kaydeder. */
+    /** Basarisiz testte ekran goruntusunu, URL'i, ag kaydini ve tarayici konsol hatalarini kaydeder. */
     private void captureFailureEvidence(String testName) {
         try {
             System.err.println("[BASARISIZ] " + testName + " | URL: " + driver.getCurrentUrl());
@@ -67,6 +68,11 @@ public abstract class BaseTest {
         } catch (Exception e) {
             System.err.println("Ekran goruntusu alinamadi: " + e.getMessage());
         }
+
+        String network = NetworkProbe.dump(driver);
+        System.err.println("[AG] " + testName + " | " + network);
+        Allure.addAttachment("Tiklama ve ag kaydi", network);
+
         captureBrowserConsole(testName);
     }
 
@@ -76,6 +82,7 @@ public abstract class BaseTest {
             List<LogEntry> entries = driver.manage().logs().get(LogType.BROWSER).getAll();
             String relevant = entries.stream()
                     .filter(entry -> entry.getLevel().intValue() >= Level.WARNING.intValue())
+                    .filter(entry -> !entry.getMessage().contains("Mixed Content"))
                     .limit(15)
                     .map(entry -> "[" + entry.getLevel() + "] " + entry.getMessage())
                     .collect(Collectors.joining("\n"));

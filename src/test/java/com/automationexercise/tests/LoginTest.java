@@ -8,6 +8,7 @@ import com.automationexercise.pages.LoginPage;
 import com.automationexercise.utils.TestDataGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.annotations.DataProvider;
 
 public class LoginTest extends UserTest {
 
@@ -53,5 +54,34 @@ public class LoginTest extends UserTest {
 
         Assert.assertEquals(loginPage.getErrorMessage(), LOGIN_ERROR,
                 "Kayitsiz e-postada beklenen hata mesaji gosterilmedi");
+    }
+
+        /** AUTH-016 (ikisi bos), AUTH-017 (sifre bos), AUTH-018 (e-posta bos). */
+    @DataProvider(name = "emptyLoginFields")
+    public Object[][] emptyLoginFields() {
+        return new Object[][]{
+                // e-posta, sifre, e-posta eksik mi, sifre eksik mi
+                {"", "", true, true},
+                {"test@example.com", "", false, true},
+                {"", "Test@12345", true, false}
+        };
+    }
+
+    @Test(dataProvider = "emptyLoginFields",
+            description = "AUTH-016/017/018: Bos alanlarla giris formu gonderilemez")
+    public void loginWithEmptyFieldsShouldBeBlocked(String email, String password,
+                                                    boolean emailMissing, boolean passwordMissing) {
+        LoginPage loginPage = new HomePage(driver).openLoginPage();
+
+        loginPage.submitLoginForm(email, password);
+
+        Assert.assertEquals(loginPage.isEmailFieldMissing(), emailMissing,
+                "E-posta alani icin zorunlu alan durumu beklenenden farkli (e-posta='" + email + "')");
+        Assert.assertEquals(loginPage.isPasswordFieldMissing(), passwordMissing,
+                "Sifre alani icin zorunlu alan durumu beklenenden farkli (sifre='" + password + "')");
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"),
+                "Form gonderilmemeli, login sayfasinda kalinmali. URL: " + driver.getCurrentUrl());
+        Assert.assertTrue(loginPage.isErrorMessageHidden(),
+                "Sunucuya gidilmemeli, sunucu hata mesaji gorunmemeli");
     }
 }

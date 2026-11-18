@@ -3,6 +3,7 @@ package com.automationexercise.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.util.List;
 
@@ -54,6 +55,33 @@ public class LoginPage extends BasePage {
 
     public String getErrorMessage() {
         return getText(LOGIN_ERROR);
+    }
+
+        /** Bos alanlari bos birakarak formu gondermeyi dener (HTML5 zorunlu alan kontrolu icin). */
+    public void submitLoginForm(String email, String password) {
+        if (!email.isEmpty()) {
+            type(LOGIN_EMAIL, email);
+        }
+        if (!password.isEmpty()) {
+            type(LOGIN_PASSWORD, password);
+        }
+        click(LOGIN_BUTTON);
+    }
+
+    public boolean isEmailFieldMissing() {
+        return isValueMissing(LOGIN_EMAIL);
+    }
+
+    public boolean isPasswordFieldMissing() {
+        return isValueMissing(LOGIN_PASSWORD);
+    }
+
+    /** Tarayicinin zorunlu alan kontrolu: alan bos ve required ise true doner. */
+    private boolean isValueMissing(By locator) {
+        WebElement element = waits.visible(locator);
+        Object result = ((JavascriptExecutor) driver)
+                .executeScript("return arguments[0].validity.valueMissing;", element);
+        return Boolean.TRUE.equals(result);
     }
 
     public boolean isErrorMessageHidden() {

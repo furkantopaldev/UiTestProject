@@ -1,5 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Automation Exercise UI Suite" verbose="1">
+    <listeners>
+        <listener class-name="com.automationexercise.listeners.RetryListener"/>
+    </listeners>
     <test name="Smoke">
         <classes>
             <class name="com.automationexercise.tests.HomePageTest"/>
@@ -18,6 +21,31 @@
     <test name="Register">
         <classes>
             <class name="com.automationexercise.tests.RegisterTest"/>
+        </classes>
+    </test>
+    <test name="Products">
+        <classes>
+            <class name="com.automationexercise.tests.ProductsTest"/>
+        </classes>
+    </test>
+    <test name="Cart">
+        <groups>
+            <run>
+                <exclude name="known-issue"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.CartTest"/>
+        </classes>
+    </test>
+    <test name="Checkout">
+        <groups>
+            <run>
+                <exclude name="known-issue"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.CheckoutTest"/>
         </classes>
     </test>
     <test name="WaitComparison">
