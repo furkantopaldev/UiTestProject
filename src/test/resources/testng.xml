@@ -6,8 +6,23 @@
         </classes>
     </test>
     <test name="Login">
-    <classes>
-        <class name="com.automationexercise.tests.LoginTest"/>
-    </classes>
-</test>
+        <classes>
+            <class name="com.automationexercise.tests.LoginTest"/>
+        </classes>
+    </test>
+    <test name="Logout">
+        <classes>
+            <class name="com.automationexercise.tests.LogoutTest"/>
+        </classes>
+    </test>
+    <test name="Register">
+        <classes>
+            <class name="com.automationexercise.tests.RegisterTest"/>
+        </classes>
+    </test>
+    <test name="WaitComparison">
+        <classes>
+            <class name="com.automationexercise.tests.WaitComparisonTest"/>
+        </classes>
+    </test>
 </suite>
