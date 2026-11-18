@@ -1,29 +1,29 @@
 package com.automationexercise.tests;
 
-import com.automationexercise.base.BaseTest;
+import com.automationexercise.base.UserTest;
 import com.automationexercise.components.Header;
 import com.automationexercise.models.User;
 import com.automationexercise.pages.AccountCreatedPage;
 import com.automationexercise.pages.AccountDeletedPage;
 import com.automationexercise.pages.HomePage;
+import com.automationexercise.pages.LoginPage;
 import com.automationexercise.pages.SignupPage;
 import com.automationexercise.utils.TestDataGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class RegisterTest extends BaseTest {
+public class RegisterTest extends UserTest {
 
-    private Header header;
-
-    @Test(description = "Yeni kullanici kaydi olusturulur, menude dogrulanir ve hesap silinir")
+    @Test(description = "AUTH-001: Yeni kullanici kaydi olusturulur, menude dogrulanir ve hesap silinir")
     public void registerNewUserThenDeleteAccount() {
         User user = TestDataGenerator.newUser();
-        header = new Header(driver);
+        Header header = new Header(driver);
 
         SignupPage signupPage = new HomePage(driver)
                 .openLoginPage()
                 .startSignup(user.name(), user.email());
         AccountCreatedPage createdPage = signupPage.createAccount(user);
+        registeredUser = user;   // hesap olustu: test ortada kalirsa temizlik kancasi siler
 
         Assert.assertTrue(createdPage.getTitleText().equalsIgnoreCase("Account Created!"),
                 "Hesap olusturuldu basligi beklenenden farkli: " + createdPage.getTitleText());
@@ -34,17 +34,22 @@ public class RegisterTest extends BaseTest {
                 "Menude gorunen kullanici adi kayit sirasinda girilen isimle ayni degil");
 
         AccountDeletedPage deletedPage = header.deleteAccount();
+        registeredUser = null;   // hesap silindi, temizlenecek bir sey kalmadi
 
         Assert.assertTrue(deletedPage.getTitleText().equalsIgnoreCase("Account Deleted!"),
                 "Hesap silindi basligi beklenenden farkli: " + deletedPage.getTitleText());
     }
 
-    /** Test ortada kalirsa olusan hesap sitede cop olarak kalmasin. */
-    @Override
-    protected void cleanUp() {
-        if (header != null && header.isLoggedInNow()) {
-            header.deleteAccount();
-        }
-        header = null;
+    @Test(description = "AUTH-002: Kayitli e-posta ile tekrar kayit denemesi hata verir")
+    public void registerWithExistingEmailShouldShowError() {
+        User user = registerUser();
+        LoginPage loginPage = new Header(driver).logout();
+
+        loginPage.submitSignup(user.name(), user.email());
+
+        Assert.assertEquals(loginPage.getSignupErrorMessage(), "Email Address already exist!",
+                "Kayitli e-postayla kayitta beklenen hata mesaji gosterilmedi");
+        Assert.assertTrue(loginPage.isLoginFormDisplayed(),
+                "Kayit formuna gecilmemeli, login sayfasinda kalinmali");
     }
 }
