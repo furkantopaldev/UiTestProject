@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 /**
- * Tüm sayfa nesnelerinin ortak davranışları.
- * Her eylem önce uygun koşulu bekler, sonra işlemi yapar.
+ * Tum sayfa nesnelerinin ortak davranislari.
+ * Her eylem once uygun kosulu bekler, sonra islemi yapar.
  */
 public abstract class BasePage {
 
@@ -39,7 +40,12 @@ public abstract class BasePage {
         new Select(waits.visible(locator)).selectByVisibleText(visibleText);
     }
 
-    /** Element görünürse true; zaman aşımında false döner (hata fırlatmaz). */
+    /** Fareyi elementin ustune getirir (hover ile acilan katmanlar icin). */
+    protected void hover(By locator) {
+        new Actions(driver).moveToElement(waits.visible(locator)).perform();
+    }
+
+    /** Element gorunurse true; zaman asiminda false doner (hata firlatmaz). */
     protected boolean isDisplayed(By locator) {
         try {
             waits.visible(locator);
@@ -49,7 +55,7 @@ public abstract class BasePage {
         }
     }
 
-    /** Element görünmüyorsa true; zaman aşımında (hâlâ görünüyorsa) false döner. */
+    /** Element gorunmuyorsa true; zaman asiminda (hala gorunuyorsa) false doner. */
     protected boolean isNotDisplayed(By locator) {
         try {
             return waits.invisible(locator);
