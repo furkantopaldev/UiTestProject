@@ -4,6 +4,8 @@ import com.automationexercise.models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /** "Enter Account Information" sayfasi. */
 public class SignupPage extends BasePage {
 
@@ -31,6 +33,7 @@ public class SignupPage extends BasePage {
         waits.visible(PASSWORD);
     }
 
+    @Step("Hesap bilgileri formu doldurulur ve hesap oluşturulur")
     public AccountCreatedPage createAccount(User user) {
         click(GENDER_MR);
         type(PASSWORD, user.password());

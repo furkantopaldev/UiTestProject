@@ -1,5 +1,7 @@
 package com.automationexercise.tests;
 
+import io.qameta.allure.*;
+
 import com.automationexercise.base.UserTest;
 import com.automationexercise.components.Header;
 import com.automationexercise.config.ConfigReader;
@@ -7,8 +9,12 @@ import com.automationexercise.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Epic("Automation Exercise UI Otomasyonu")
+@Feature("Kimlik doğrulama (Register / Login)")
 public class LogoutTest extends UserTest {
 
+    @Story("AUTH-019 Çıkış")
+    @Severity(SeverityLevel.CRITICAL)    
     @Test(description = "AUTH-019: Oturum kapatilir ve login sayfasina yonlenilir")
     public void logoutShouldEndSession() {
         registerUser();

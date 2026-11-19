@@ -1,5 +1,7 @@
 package com.automationexercise.tests;
 
+import io.qameta.allure.*;
+
 import com.automationexercise.base.BaseTest;
 import com.automationexercise.pages.HomePage;
 import com.automationexercise.pages.LoginPage;
@@ -11,10 +13,14 @@ import org.testng.annotations.Test;
  * Statik (Thread.sleep) ve dinamik (WaitHelper) beklemeyi ayni adimda karsilastirir.
  * Thread.sleep projede yalnizca bu sinifta, ornek amacli kullanilir.
  */
+@Epic("Automation Exercise UI Otomasyonu")
+@Feature("Altyapı ve ölçüm")
 public class WaitComparisonTest extends BaseTest {
 
     private static final String EXPECTED_ERROR = "Your email or password is incorrect!";
 
+    @Story("Statik ve dinamik bekleme karşılaştırması")
+    @Severity(SeverityLevel.MINOR)
     @Test(description = "Statik bekleme (100 ms): sonuc sansa bagli, yalnizca olculur")
     public void staticShortWait() {
         LoginPage loginPage = submitWrongLogin();
@@ -26,6 +32,8 @@ public class WaitComparisonTest extends BaseTest {
         report("STATIK 100 ms", start, text.isEmpty() ? "MESAJ BULUNAMADI" : "mesaj bulundu");
     }
 
+    @Story("Statik ve dinamik bekleme karşılaştırması")
+    @Severity(SeverityLevel.MINOR)
     @Test(description = "Statik bekleme (5000 ms): mesaj bulunur ama gereksiz beklenir")
     public void staticLongWait() {
         LoginPage loginPage = submitWrongLogin();
@@ -39,6 +47,8 @@ public class WaitComparisonTest extends BaseTest {
                 "5 sn statik bekleme sonrasinda beklenen hata mesaji okunamadi");
     }
 
+    @Story("Statik ve dinamik bekleme karşılaştırması")
+    @Severity(SeverityLevel.MINOR)
     @Test(description = "Dinamik bekleme: mesaj gorunur olur olmaz devam eder")
     public void dynamicWait() {
         LoginPage loginPage = submitWrongLogin();

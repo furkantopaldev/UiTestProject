@@ -1,5 +1,7 @@
 package com.automationexercise.tests;
 
+import io.qameta.allure.*;
+
 import com.automationexercise.base.BaseTest;
 import com.automationexercise.pages.CartPage;
 import com.automationexercise.pages.HomePage;
@@ -7,10 +9,14 @@ import com.automationexercise.pages.ProductsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Epic("Automation Exercise UI Otomasyonu")
+@Feature("Sepet(Cart")
 public class CartTest extends BaseTest {
 
     private static final int BLUE_TOP_ID = 1;
 
+    @Story("CART-001 Sepete ekleme")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(groups = "known-issue", description = "CART-001: Urun listesinden sepete ekleme")
     public void addProductFromListShouldAppearInCart() {
         ProductsPage productsPage = new HomePage(driver).openProductsPage();

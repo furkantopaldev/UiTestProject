@@ -1,5 +1,7 @@
 package com.automationexercise.base;
 
+import io.qameta.allure.Step;
+
 import com.automationexercise.components.Header;
 import com.automationexercise.config.ConfigReader;
 import com.automationexercise.models.User;
@@ -7,6 +9,8 @@ import com.automationexercise.pages.AccountCreatedPage;
 import com.automationexercise.pages.HomePage;
 import com.automationexercise.pages.LoginPage;
 import com.automationexercise.utils.TestDataGenerator;
+
+
 
 /**
  * Kayitli kullanici gerektiren testlerin ust sinifi.
@@ -18,6 +22,7 @@ public abstract class UserTest extends BaseTest {
     protected User registeredUser;
 
     /** Yeni kullaniciyi arayuzden kaydeder; kayit sonunda kullanici giris yapmis halde ana sayfadadir. */
+    @Step("Yeni test kullanıcısı kaydedilir")
     protected User registerUser() {
         User user = TestDataGenerator.newUser();
         AccountCreatedPage createdPage = new HomePage(driver)
@@ -30,6 +35,7 @@ public abstract class UserTest extends BaseTest {
     }
 
     @Override
+    @Step("Temizlik: test hesabı silinir")
     protected void cleanUp() {
         // Referansi hemen sifirla: temizlik hata verse bile sonraki test eski kullaniciyi devralmasin.
         User user = registeredUser;

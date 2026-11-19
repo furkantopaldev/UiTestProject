@@ -3,6 +3,8 @@ package com.automationexercise.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 public class HomePage extends BasePage {
 
     private static final By LOGO = By.cssSelector(".logo img");
@@ -18,6 +20,7 @@ public class HomePage extends BasePage {
     }
 
     /** Menuden Signup / Login'e tiklar, URL degisene kadar bekler ve LoginPage dondurur. */
+    @Step("Menüden Signup / Login sayfasına gidilir")
     public LoginPage openLoginPage() {
         click(SIGNUP_LOGIN_LINK);
         waits.urlContains("/login");
@@ -25,6 +28,7 @@ public class HomePage extends BasePage {
     }
 
     /** Menuden Products'a tiklar, sayfa yuklenene kadar bekler ve ProductsPage dondurur. */
+    @Step("Menüden Products sayfasına gidilir")
     public ProductsPage openProductsPage() {
         click(PRODUCTS_LINK);
         waits.urlContains("/products");

@@ -3,6 +3,8 @@ package com.automationexercise.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 public class CartPage extends BasePage {
 
     private static final By CART_TABLE = By.id("cart_info_table");
@@ -46,6 +48,7 @@ public class CartPage extends BasePage {
         return getText(rowCell(productId, ".cart_total_price"));
     }
 
+    @Step("Proceed To Checkout tıklanır")
     public void proceedToCheckout() {
         click(CHECKOUT_BUTTON);
     }

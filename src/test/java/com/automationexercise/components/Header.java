@@ -1,11 +1,13 @@
 package com.automationexercise.components;
 
+import io.qameta.allure.Step;
 import com.automationexercise.pages.AccountDeletedPage;
 import com.automationexercise.pages.LoginPage;
 import com.automationexercise.utils.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+
 
 /** Ust menu. Tum sayfalarda ortaktir. */
 public class Header {
@@ -24,6 +26,7 @@ public class Header {
     }
 
     /** Menude gorunen kullanici adini dondurur (gorunur olana kadar bekler). */
+    @Step("Menüdeki kullanıcı adı okunur")
     public String getLoggedInUsername() {
         return waits.visible(LOGGED_IN_USERNAME).getText();
     }
@@ -47,12 +50,14 @@ public class Header {
     }
 
     /** Logout'a tiklar, login sayfasina yonlenene kadar bekler. */
+    @Step("Çıkış yapılır")
     public LoginPage logout() {
         waits.clickable(LOGOUT_LINK).click();
         waits.urlContains("/login");
         return new LoginPage(driver);
     }
 
+    @Step("Hesap silinir")
     public AccountDeletedPage deleteAccount() {
         waits.clickable(DELETE_ACCOUNT_LINK).click();
         return new AccountDeletedPage(driver);

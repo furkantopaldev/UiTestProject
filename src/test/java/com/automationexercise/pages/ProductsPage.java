@@ -1,11 +1,15 @@
 package com.automationexercise.pages;
 import com.automationexercise.utils.NetworkProbe;
 
+import io.qameta.allure.Step;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+
 
 public class ProductsPage extends BasePage {
 
@@ -45,6 +49,7 @@ public class ProductsPage extends BasePage {
     }
 
     /** Arama yapar. Sonucun geldigini beklemek cagiranin isidir (waitForSearchedProductsTitle). */
+    @Step("Ürün aranır: {term}")
     public void search(String term) {
         type(SEARCH_INPUT, term);
         click(SEARCH_BUTTON);
@@ -61,6 +66,7 @@ public class ProductsPage extends BasePage {
      * uzerine gelince acilan katmanda. Kullanicinin yaptigi gibi once kartin ustune gelinir,
      * sonra katmandaki buton tiklanir.
      */
+    @Step("Ürün sepete eklenir: id {productId}")
     public void addToCart(int productId) {
         NetworkProbe.install(driver);   // tanilama: tiklama ve istek kaydi (davranisi degistirmez)
         By cardButton = By.cssSelector(".productinfo a.add-to-cart[data-product-id='" + productId + "']");
@@ -73,6 +79,7 @@ public class ProductsPage extends BasePage {
      * "Added!" penceresindeki View Cart'a tiklar ve sepet sayfasini dondurur.
      * Once pencerenin kendisi beklenir: pencere hic acilmadiysa hata bunu soyler.
      */
+    @Step("Added! penceresinden sepete gidilir")
     public CartPage viewCartFromModal() {
         waits.visible(ADDED_MODAL_TITLE);
         click(ADDED_MODAL_VIEW_CART);

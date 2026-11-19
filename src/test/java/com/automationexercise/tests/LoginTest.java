@@ -1,5 +1,7 @@
 package com.automationexercise.tests;
 
+import io.qameta.allure.*;
+
 import com.automationexercise.base.UserTest;
 import com.automationexercise.components.Header;
 import com.automationexercise.models.User;
@@ -10,10 +12,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;
 
+@Epic("Automation Exercise UI Otomasyonu")
+@Feature("Kimlik doğrulama (Register / Login)")
 public class LoginTest extends UserTest {
 
     private static final String LOGIN_ERROR = "Your email or password is incorrect!";
 
+    @Story("AUTH-013 Başarılı giriş")    
+    @Severity(SeverityLevel.CRITICAL)    
     @Test(description = "AUTH-013: Dogru e-posta ve sifre ile giris yapilir")
     public void loginWithValidCredentialsShouldSucceed() {
         User user = registerUser();
@@ -28,6 +34,8 @@ public class LoginTest extends UserTest {
                 "Giris sonrasi menude Logout baglantisi gorunmuyor");
     }
 
+    @Story("AUTH-014 Yanlış şifre")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(description = "AUTH-014: Kayitli e-posta ve yanlis sifre ile giris reddedilir")
     public void loginWithWrongPasswordShouldShowError() {
         User user = registerUser();
@@ -41,6 +49,8 @@ public class LoginTest extends UserTest {
                 "Yanlis sifreyle kullanici oturum acmamali");
     }
 
+    @Story("AUTH-015 Kayıtsız e-posta")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(description = "AUTH-015: Kayitsiz e-posta ile giris denemesi hata mesaji gosterir")
     public void loginWithUnregisteredEmailShouldShowError() {
         LoginPage loginPage = new HomePage(driver).openLoginPage();

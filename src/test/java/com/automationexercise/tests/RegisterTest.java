@@ -1,5 +1,7 @@
 package com.automationexercise.tests;
 
+import io.qameta.allure.*;
+
 import com.automationexercise.base.UserTest;
 import com.automationexercise.components.Header;
 import com.automationexercise.models.User;
@@ -12,8 +14,12 @@ import com.automationexercise.utils.TestDataGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Epic("Automation Exercise UI Otomasyonu")
+@Feature("Kimlik doğrulama (Register / Login)")
 public class RegisterTest extends UserTest {
-
+    
+    @Story("AUTH-001 Yeni kayıt")
+    @Severity(SeverityLevel.CRITICAL)    
     @Test(description = "AUTH-001: Yeni kullanici kaydi olusturulur, menude dogrulanir ve hesap silinir")
     public void registerNewUserThenDeleteAccount() {
         User user = TestDataGenerator.newUser();
@@ -40,6 +46,8 @@ public class RegisterTest extends UserTest {
                 "Hesap silindi basligi beklenenden farkli: " + deletedPage.getTitleText());
     }
 
+    @Story("AUTH-002 Kayıtlı e-postayla tekrar kayıt")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(description = "AUTH-002: Kayitli e-posta ile tekrar kayit denemesi hata verir")
     public void registerWithExistingEmailShouldShowError() {
         User user = registerUser();

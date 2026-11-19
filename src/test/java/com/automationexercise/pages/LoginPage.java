@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
 
+import io.qameta.allure.Step;
+
 import java.util.List;
 
 public class LoginPage extends BasePage {
@@ -28,6 +30,7 @@ public class LoginPage extends BasePage {
         return isDisplayed(LOGIN_HEADING);
     }
 
+    @Step("E-posta ve şifre ile giriş denenir: {email}")
     public void login(String email, String password) {
         type(LOGIN_EMAIL, email);
         type(LOGIN_PASSWORD, password);
@@ -35,6 +38,7 @@ public class LoginPage extends BasePage {
     }
 
     /** Sag formu doldurup Signup'a basar ve hesap bilgileri sayfasini dondurur. */
+    @Step("Kayıt başlatılır: {name}, {email}")
     public SignupPage startSignup(String name, String email) {
         submitSignup(name, email);
         SignupPage signupPage = new SignupPage(driver);
@@ -43,21 +47,25 @@ public class LoginPage extends BasePage {
     }
 
     /** Sag formu doldurup Signup'a basar, sonraki sayfayi beklemez (hata senaryolari icin). */
+    @Step("Kayıt formu gönderilir: {email}")
     public void submitSignup(String name, String email) {
         type(SIGNUP_NAME, name);
         type(SIGNUP_EMAIL, email);
         click(SIGNUP_BUTTON);
     }
 
+    @Step("Kayıt hata mesajı okunur")
     public String getSignupErrorMessage() {
         return getText(SIGNUP_ERROR);
     }
 
+    @Step("Giriş hata mesajı okunur")
     public String getErrorMessage() {
         return getText(LOGIN_ERROR);
     }
 
         /** Bos alanlari bos birakarak formu gondermeyi dener (HTML5 zorunlu alan kontrolu icin). */
+    @Step("Giriş formu gönderilir (boş alan olabilir): e-posta='{email}'")
     public void submitLoginForm(String email, String password) {
         if (!email.isEmpty()) {
             type(LOGIN_EMAIL, email);
