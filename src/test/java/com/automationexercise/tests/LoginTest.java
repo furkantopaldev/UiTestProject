@@ -77,8 +77,9 @@ public class LoginTest extends UserTest {
         };
     }
 
-    @Test(dataProvider = "emptyLoginFields",
-            description = "AUTH-016/017/018: Bos alanlarla giris formu gonderilemez")
+    @Story("AUTH-016/017/018 Boş alanlar")
+    @Severity(SeverityLevel.NORMAL)
+    @Test(dataProvider = "emptyLoginFields",description = "AUTH-016/017/018: Bos alanlarla giris formu gonderilemez")
     public void loginWithEmptyFieldsShouldBeBlocked(String email, String password,
                                                     boolean emailMissing, boolean passwordMissing) {
         LoginPage loginPage = new HomePage(driver).openLoginPage();

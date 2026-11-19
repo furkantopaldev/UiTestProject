@@ -127,6 +127,8 @@ Karantinadaki testler (yazildi, kararsiz oldugu icin toplu calistirmadan cikaril
 
 Her test kendi temiz tarayicisiyla baslar. Kayitli kullanici gereken testler kendi kullanicisini olusturur ve sonunda siler (`UserTest`), bu yuzden testler birbirinden bagimsizdir ve tekrar calistirilabilir. Site zaman zaman asiri yuk sayfasi dondurdugu icin, yalnizca `ORTAM SORUNU` isaretli hatalar en fazla 2 kez yeniden denenir; gercek dogrulama hatalari hic yeniden denenmez.
 
+Test ortami olan halka acik demo site, gun icinde bazi saatlerde yogunlasip "heavy load (queue full)" sayfasi dondurebiliyor. Bu hatalar ortam kaynaklidir, test kodundan degil. Sakin saatlerde tam suite 18/18 geciyor (BUILD SUCCESS).
+
 ## Klasor yapisi
 
 ```
@@ -153,3 +155,4 @@ docs/           Analiz ve karsilastirma dokumanlari
 | docs/bekleme-stratejileri.md | Statik ve dinamik bekleme karsilastirmasi ve olcumler |
 | docs/otomasyon-uygunluk.md | 2. haftadaki 53 manuel case'in otomasyon uygunluk analizi |
 | docs/bilinen-sorunlar.md | Kararsiz sepet testinin olcumleri ve hipotezleri |
+| docs/framework-karsilastirma.md | Selenium, Playwright, Cypress karsilastirmasi ve secim gerekcesi |
