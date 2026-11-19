@@ -72,13 +72,13 @@ Raporda gorebileceklerin:
 
 Basarili calistirma:
 
-![Basarili rapor: Overview](docs/raporlar/allure-basarili-1-overview.png)
-![Basarili rapor: Behaviors](docs/raporlar/allure-basarili-2-behaviors.png)
-![Basarili rapor: test adimlari](docs/raporlar/allure-basarili-3-adimlar.png)
+![Basarili rapor: Overview](docs/Raporlar/OVERVİEW.png)
+![Basarili rapor: Behaviors](docs/raporlar/BEHAVIORS.png)
+![Basarili rapor: test adimlari](docs/raporlar/SUITES.png)
 
 Basarisiz calistirma. Bu ornek, **kasitli olarak yanlis adres verilerek** uretilmis bir negatif kontroldur (`mvn test -Dtest=HomePageTest "-Dbase.url=https://example.com"`); testin yanlis sayfayi fark edip basarisiz oldugunu ve kanit topladigini gosterir. Urun hatasi degildir.
 
-![Basarisiz rapor](docs/raporlar/allure-basarisiz-1-overview.png)
+![Basarisiz rapor](docs/raporlar/ERRORFARKLİSİTE.png)
 
 > Gorsel dosya adlari `docs/raporlar/` klasorundeki gercek adlarla ayni olmalidir; farkliysa yukaridaki yollari duzelt.
 
